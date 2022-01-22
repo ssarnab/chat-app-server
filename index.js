@@ -4,7 +4,7 @@ const port = process.env.PORT || 5000;
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 //
-const socketio = require('socket.io');
+//const socketio = require('socket.io');
 const http = require('http');
 //
 const cors = require('cors');
@@ -40,7 +40,13 @@ app.use((req, res, next) => {
   next();
 });
 const server = http.createServer(app);
-const io = socketio(server);
+//const io = socketio(server);
+const io = require("socket.io")(server, {
+  cors: {
+    origin: "https://chat-app-4u.netlify.app/",
+    methods: ["GET", "POST"]
+  }
+});
 
 // const io = require("socket.io")(port, {
 //   cors: {
