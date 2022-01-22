@@ -5,7 +5,9 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 //
 //const socketio = require('socket.io');
-const http = require('http');
+//const http = require('http');
+import { createServer } from "http";
+import { Server } from "socket.io";
 //
 const cors = require('cors');
 const helmet = require("helmet");
@@ -31,12 +33,12 @@ app.use(helmet());
 app.use(cors());
 app.use(morgan("common"));
 
-const server = http.createServer(app);
-//const io = socketio(server);
-const io = require("socket.io")(server, {
+
+
+const httpServer = createServer();
+const io = new Server(httpServer, {
   cors: {
-    origin: "https://chat-app-4u.netlify.app/",
-    methods: ["GET", "POST"]
+    origin: "https://chat-app-4u.netlify.app"
   }
 });
 
