@@ -4,7 +4,7 @@ const port = process.env.PORT || 5000;
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 //
-//const socketio = require('socket.io');
+const socketio = require('socket.io');
 const http = require('http');
 //
 const cors = require('cors');
@@ -30,15 +30,23 @@ app.use(express.json());
 app.use(helmet());
 app.use(cors());
 app.use(morgan("common"));
-
-const server = http.createServer(app);
-//const io = socketio(server);
-
-const io = require("socket.io")(server, {
-  cors: {
-    origin: "https://chat-app-4u.netlify.app/",
-  },
+// Add Access Control Allow Origin headers
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "https://chat-app-4u.netlify.app/");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
 });
+const server = http.createServer(app);
+const io = socketio(server);
+
+// const io = require("socket.io")(port, {
+//   cors: {
+//     origin: "https://chat-app-4u.netlify.app/",
+//   },
+// });
 
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
