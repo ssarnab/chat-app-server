@@ -46,7 +46,7 @@ app.use("/api/messages", messageRoute);
 
 server.listen(process.env.PORT || 5000, () => console.log(`Server has started.`));
 
-io.on('connection', (socket) => {
+io.on('connect', (socket) => {
    //when ceonnect
    console.log("a user connected.");
 
