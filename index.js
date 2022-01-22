@@ -39,6 +39,8 @@ const httpServer = createServer();
 const io = new Server(httpServer, {
   cors: {
     origin: "https://chat-app-4u.netlify.app",
+    allowedHeaders: ["my-custom-header"],
+    credentials: true
   }
 });
 
